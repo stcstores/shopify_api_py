@@ -7,7 +7,7 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
-        additional_dependencies: [flake8-docstrings]
+        additional_dependencies: ["flake8-docstrings", "flake8-pyi"]
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.10.1
     hooks:
@@ -16,5 +16,5 @@ repos:
     rev: "v0.931"
     hooks:
       - id: mypy
-        additional_dependencies: [types-toml]
+        additional_dependencies: ["types-toml"]
         exclude: docs/
