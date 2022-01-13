@@ -7,7 +7,7 @@ import shopify
 from shopify_api import exceptions
 
 
-def make_paginated_request(
+def make_request(
     request_method: Callable, **kwargs: dict[str, Any]
 ) -> list[shopify.ShopifyResource]:
     """Return a list of all shopify products."""
