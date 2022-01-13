@@ -1,6 +1,6 @@
 """Shopify API."""
 
-from . import exceptions, products
+from . import exceptions, locations, products
 from .session import ShopifyAPISession
 
-__all__ = ["ShopifyAPISession", "products", "exceptions"]
+__all__ = ["ShopifyAPISession", "products", "locations", "exceptions"]

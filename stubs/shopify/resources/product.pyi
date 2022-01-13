@@ -1,5 +1,3 @@
-from shopify import mixins
-
-from ..base import ShopifyResource
+from shopify import ShopifyResource, mixins
 
 class Product(ShopifyResource, mixins.Metafields, mixins.Events): ...
