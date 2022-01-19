@@ -1,5 +1,12 @@
 from .base import ShopifyResource
-from .resources import Location, Product
+from .resources import InventoryLevel, Location, Product, Variant
 from .session import Session
 
-__all__ = ["Session", "ShopifyResource", "Product", "Location"]
+__all__ = [
+    "ShopifyResource",
+    "InventoryLevel",
+    "Location",
+    "Product",
+    "Variant",
+    "Session",
+]

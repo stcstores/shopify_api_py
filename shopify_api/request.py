@@ -8,7 +8,7 @@ from shopify_api import exceptions
 
 
 def make_request(
-    request_method: Callable, **kwargs: dict[str, Any]
+    request_method: Callable, **kwargs: Any
 ) -> list[shopify.ShopifyResource]:
     """Return a list of all shopify products."""
     response = request_method(**kwargs)
