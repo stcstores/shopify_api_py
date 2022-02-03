@@ -4,7 +4,7 @@ from typing import Any, Callable
 
 import shopify
 
-from shopify_api import exceptions
+from shopify_api_py import exceptions
 
 
 def make_request(

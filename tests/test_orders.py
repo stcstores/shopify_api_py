@@ -3,12 +3,12 @@ from unittest.mock import Mock, patch
 import pytest
 import shopify
 
-from shopify_api import orders
+from shopify_api_py import orders
 
 
 @pytest.fixture
 def mock_request():
-    with patch("shopify_api.orders.request") as mock_request:
+    with patch("shopify_api_py.orders.request") as mock_request:
         yield mock_request
 
 

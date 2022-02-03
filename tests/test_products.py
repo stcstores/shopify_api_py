@@ -3,12 +3,12 @@ from unittest.mock import Mock, patch
 import pytest
 import shopify
 
-from shopify_api import products
+from shopify_api_py import products
 
 
 @pytest.fixture
 def mock_request():
-    with patch("shopify_api.products.request") as mock_request:
+    with patch("shopify_api_py.products.request") as mock_request:
         yield mock_request
 
 
@@ -82,7 +82,7 @@ def test_set_stock_level_returns_request_response(
     assert return_value == response
 
 
-@patch("shopify_api.products.set_stock_level")
+@patch("shopify_api_py.products.set_stock_level")
 def test_update_variant_stock_calls_set_stock_level(
     mock_set_stock_level, location_id, inventory_item_id, new_stock_level
 ):
@@ -97,7 +97,7 @@ def test_update_variant_stock_calls_set_stock_level(
     )
 
 
-@patch("shopify_api.products.set_stock_level")
+@patch("shopify_api_py.products.set_stock_level")
 def test_update_variant_stock_returns_response(
     mock_set_stock_level, location_id, inventory_item_id, new_stock_level
 ):

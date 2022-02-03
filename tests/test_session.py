@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 import pytest
 import toml
 
-from shopify_api import exceptions, session
+from shopify_api_py import exceptions, session
 
 
 @pytest.fixture(autouse=True)
@@ -15,7 +15,7 @@ def temp_cwd(tmpdir):
 
 @pytest.fixture
 def mock_shopify():
-    with patch("shopify_api.session.shopify") as mock:
+    with patch("shopify_api_py.session.shopify") as mock:
         yield mock
 
 

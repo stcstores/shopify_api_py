@@ -2,7 +2,7 @@
 
 import shopify
 
-from shopify_api import request
+from shopify_api_py import request
 
 
 def get_inventory_locations() -> list[shopify.ShopifyResource]:

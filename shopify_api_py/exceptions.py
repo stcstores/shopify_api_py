@@ -1,4 +1,4 @@
-"""Exceptions for the shopify_api package."""
+"""Exceptions for the shopify_api_py package."""
 from typing import Any, Mapping
 
 

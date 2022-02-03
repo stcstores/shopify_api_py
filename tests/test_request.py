@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, Mock, call
 
 import pytest
 
-from shopify_api import exceptions, request
+from shopify_api_py import exceptions, request
 
 
 @pytest.fixture
