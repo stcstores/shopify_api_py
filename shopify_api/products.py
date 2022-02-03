@@ -8,18 +8,18 @@ from shopify_api import request
 def get_all_products() -> list[shopify.ShopifyResource]:
     """Return a list of all shopify products."""
     request_method = shopify.Product.find
-    return request.make_request(request_method=request_method)
+    return request.make_paginated_request(request_method=request_method)
 
 
 def get_all_variants() -> list[shopify.ShopifyResource]:
     """Return a list of all shopify variants."""
     request_method = shopify.Variant.find
-    return request.make_request(request_method=request_method)
+    return request.make_paginated_request(request_method=request_method)
 
 
 def set_stock_level(
     location_id: int, inventory_item_id: int, new_stock_level: int
-) -> list[shopify.ShopifyResource]:
+) -> shopify.ShopifyResource:
     """Set the stock level for a variant and location."""
     request_method = shopify.InventoryLevel.set
     kwargs = {
@@ -32,7 +32,7 @@ def set_stock_level(
 
 def update_variant_stock(
     variant: shopify.Variant, location_id: int, new_stock_level: int
-) -> list[shopify.ShopifyResource] | None:
+) -> shopify.ShopifyResource:
     """
     Update the stock level of a variant.
 

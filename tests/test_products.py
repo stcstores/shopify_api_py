@@ -27,29 +27,29 @@ def new_stock_level():
     return 5
 
 
-def test_get_all_products_calls_make_request(mock_request):
+def test_get_all_products_calls_make_paginated_request(mock_request):
     products.get_all_products()
-    mock_request.make_request.assert_called_once_with(
+    mock_request.make_paginated_request.assert_called_once_with(
         request_method=shopify.Product.find
     )
 
 
-def test_get_all_products_returns_make_request_return_value(mock_request):
+def test_get_all_products_returns_make_paginated_request_return_value(mock_request):
     return_value = Mock()
-    mock_request.make_request.return_value = return_value
+    mock_request.make_paginated_request.return_value = return_value
     assert products.get_all_products() is return_value
 
 
-def test_get_all_variants_calls_make_request(mock_request):
+def test_get_all_variants_calls_make_paginated_request(mock_request):
     products.get_all_variants()
-    mock_request.make_request.assert_called_once_with(
+    mock_request.make_paginated_request.assert_called_once_with(
         request_method=shopify.Variant.find
     )
 
 
-def test_get_all_variants_returns_make_request_return_value(mock_request):
+def test_get_all_variants_returns_make_paginated_request_return_value(mock_request):
     return_value = Mock()
-    mock_request.make_request.return_value = return_value
+    mock_request.make_paginated_request.return_value = return_value
     assert products.get_all_variants() is return_value
 
 

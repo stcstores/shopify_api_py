@@ -82,17 +82,31 @@ def mock_multi_page_resources_response(
     ]
 
 
+def test_make_request_calls_request_method():
+    kwargs = {"a": "b"}
+    request_method = Mock()
+    request.make_request(request_method=request_method, **kwargs)
+    request_method.assert_called_once_with(**kwargs)
+
+
+def test_make_request_returns_request_method():
+    return_value = Mock()
+    request_method = Mock(return_value=return_value)
+    returned_value = request.make_request(request_method=request_method)
+    assert returned_value == return_value
+
+
 def test_get_all_resources_calls_find(
     mock_request_method, mock_single_page_resources_response
 ):
-    request.make_request(request_method=mock_request_method)
+    request.make_paginated_request(request_method=mock_request_method)
     mock_request_method.assert_called_once_with()
 
 
 def test_get_all_resources_returns_resources_single_page(
     mock_request_method, mock_single_page_resources_response, mock_resources
 ):
-    return_value = request.make_request(request_method=mock_request_method)
+    return_value = request.make_paginated_request(request_method=mock_request_method)
     assert return_value == mock_resources
 
 
@@ -103,7 +117,7 @@ def test_get_all_resources_returns_resources_multi_page(
     mock_multi_page_response_2_resources,
     mock_multi_page_response_3_resources,
 ):
-    return_value = request.make_request(request_method=mock_request_method)
+    return_value = request.make_paginated_request(request_method=mock_request_method)
     assert (
         return_value
         == mock_multi_page_response_1_resources
@@ -119,7 +133,7 @@ def test_get_all_resources_requests_all_pages(
     mock_multi_page_response_2_resources,
     mock_multi_page_response_3_resources,
 ):
-    request.make_request(request_method=mock_request_method)
+    request.make_paginated_request(request_method=mock_request_method)
     mock_request_method.assert_has_calls(
         (call(), call(from_="resources/1"), call(from_="resources/2"))
     )
@@ -131,4 +145,4 @@ def test_get_all_resources_stops_after_max_pages(
 ):
     mock_request_method.return_value = mock_multi_page_response_1
     with pytest.raises(exceptions.TooManyPageRequestsError):
-        request.make_request(request_method=mock_request_method)
+        request.make_paginated_request(request_method=mock_request_method)
