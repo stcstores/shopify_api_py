@@ -1,7 +1,7 @@
 """Session manager for the shopify API."""
 
 from pathlib import Path
-from typing import Optional, Union
+from typing import Any, Callable, Optional, Union
 
 import shopify
 import toml
@@ -83,3 +83,13 @@ class ShopifyAPISession:
             api_version=config.get("API_VERSION"),
             api_password=config.get("API_PASSWORD"),
         )
+
+
+def shopify_api_session(func: Callable) -> Callable:
+    """Use a shopify API session as a method decorator."""
+
+    def wrapper_shopify_api_session(*args: Any, **kwargs: Any) -> Any:
+        with ShopifyAPISession():
+            return func(*args, **kwargs)
+
+    return wrapper_shopify_api_session
