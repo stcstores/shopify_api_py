@@ -5,16 +5,16 @@ import shopify
 from shopify_api_py import request
 
 
-def get_all_products() -> list[shopify.ShopifyResource]:
+def get_all_products() -> list[shopify.Product]:
     """Return a list of all shopify products."""
     request_method = shopify.Product.find
-    return request.make_paginated_request(request_method=request_method)
+    return request.make_paginated_request(request_method=request_method)  # type: ignore[return-value]
 
 
-def get_all_variants() -> list[shopify.ShopifyResource]:
+def get_all_variants() -> list[shopify.Variant]:
     """Return a list of all shopify variants."""
     request_method = shopify.Variant.find
-    return request.make_paginated_request(request_method=request_method)
+    return request.make_paginated_request(request_method=request_method)  # type: ignore[return-value]
 
 
 def set_stock_level(
