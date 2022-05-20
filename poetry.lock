@@ -144,7 +144,7 @@ pydocstyle = ">=2.1"
 
 [[package]]
 name = "flake8-pyi"
-version = "22.5.0"
+version = "22.5.1"
 description = "A plugin for flake8 to enable linting .pyi files."
 category = "dev"
 optional = false
@@ -475,7 +475,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "6ae146e69241c343e57eb6429d9038d5fa7215798d989ca92162ff79bd8c1fc0"
+content-hash = "b8ea6c0de4d5dff421d2af232462946298b7b0ab6cb14d9f409d19d92d903db2"
 
 [metadata.files]
 atomicwrites = [
@@ -586,8 +586,8 @@ flake8-docstrings = [
     {file = "flake8_docstrings-1.6.0-py2.py3-none-any.whl", hash = "sha256:99cac583d6c7e32dd28bbfbef120a7c0d1b6dde4adb5a9fd441c4227a6534bde"},
 ]
 flake8-pyi = [
-    {file = "flake8-pyi-22.5.0.tar.gz", hash = "sha256:0f84549c56367b9e580be968e5c8a7cda3b85f63bb06c659b4bdb8e03ad16264"},
-    {file = "flake8_pyi-22.5.0-py37-none-any.whl", hash = "sha256:dda560bee3a26db4bb6c9d85261423a93c4545ffde533c3b51552ae010fc6d59"},
+    {file = "flake8-pyi-22.5.1.tar.gz", hash = "sha256:52152ae25efbd6329c6426a3b29a9073a696ba744502fb3e48581a47426ad4c8"},
+    {file = "flake8_pyi-22.5.1-py37-none-any.whl", hash = "sha256:dfd385389f7bfed6c6666df1bc0a1a70fb03577e4e3ccd79229053d1e2854a96"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
