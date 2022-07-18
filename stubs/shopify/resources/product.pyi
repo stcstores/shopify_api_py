@@ -1,3 +1,10 @@
-from shopify import ShopifyResource, mixins
+import shopify
 
-class Product(ShopifyResource, mixins.Metafields, mixins.Events): ...
+class Product(
+    shopify.ShopifyResource, shopify.mixins.Metafields, shopify.mixins.Events
+):
+    title: str
+    body: str
+    variants: list[shopify.Variant]
+    options: list[shopify.Option]
+    def save(self) -> Product: ...

@@ -4,6 +4,7 @@ from .resources import (
     Image,
     InventoryLevel,
     Location,
+    Option,
     Order,
     Product,
     Variant,
@@ -20,4 +21,5 @@ __all__ = [
     "Product",
     "Variant",
     "Session",
+    "Option",
 ]

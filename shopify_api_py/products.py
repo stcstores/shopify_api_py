@@ -1,5 +1,7 @@
 """Methods for interacting with Shopify products."""
 
+import itertools
+
 import shopify
 
 from shopify_api_py import request
@@ -46,3 +48,33 @@ def update_variant_stock(
     )
     variant.inventory_quantity = new_stock_level
     return response
+
+
+def create_product() -> shopify.Product:
+    options = []
+    variants = []
+    variations = {
+        "Size": ["Small", "Medium", "Large"],
+        "Colour": ["Red", "Green", "Blue"],
+    }
+    for option_name, values in variations.items():
+        option = shopify.Option()
+        option.name = option_name
+        option.values = values
+        options.append(option)
+    for i, variation in enumerate(itertools.product(*list(variations.values())), 1):
+        variant = shopify.Variant()
+        variant.sku = f"TEST_SKU_{i}"
+        variant.tracked = True
+        for i, value in enumerate(variation, 1):
+            setattr(variant, f"option{i}", value)
+        variants.append(variant)
+    product = shopify.Product()
+    product.title = "API TEST"
+    product.body = "Test Description"
+    product.variants = variants
+    product.options = options
+
+    response = product.save()
+    print(product, response)
+    return product
