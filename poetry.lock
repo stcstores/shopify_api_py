@@ -144,7 +144,7 @@ pydocstyle = ">=2.1"
 
 [[package]]
 name = "flake8-pyi"
-version = "22.5.1"
+version = "22.7.0"
 description = "A plugin for flake8 to enable linting .pyi files."
 category = "dev"
 optional = false
@@ -258,8 +258,8 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-dev = ["pre-commit", "tox"]
-testing = ["pytest", "pytest-benchmark"]
+testing = ["pytest-benchmark", "pytest"]
+dev = ["tox", "pre-commit"]
 
 [[package]]
 name = "py"
@@ -319,10 +319,10 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
+tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
+docs = ["zope.interface", "sphinx-rtd-theme", "sphinx"]
+dev = ["pre-commit", "mypy", "coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)", "cryptography (>=3.3.1)", "zope.interface", "sphinx-rtd-theme", "sphinx"]
 crypto = ["cryptography (>=3.3.1)"]
-dev = ["sphinx", "sphinx-rtd-theme", "zope.interface", "cryptography (>=3.3.1)", "pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)", "mypy", "pre-commit"]
-docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
-tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
 
 [[package]]
 name = "pyparsing"
@@ -369,7 +369,7 @@ coverage = {version = ">=5.2.1", extras = ["toml"]}
 pytest = ">=4.6"
 
 [package.extras]
-testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
+testing = ["virtualenv", "pytest-xdist", "six", "process-tests", "hunter", "fields"]
 
 [[package]]
 name = "pyyaml"
@@ -475,7 +475,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "b8ea6c0de4d5dff421d2af232462946298b7b0ab6cb14d9f409d19d92d903db2"
+content-hash = "37f19fb704c96cbdcf1a4b90427cefb8b83ae06cbac59076465a1c46ae2fc4c3"
 
 [metadata.files]
 atomicwrites = [
@@ -586,8 +586,8 @@ flake8-docstrings = [
     {file = "flake8_docstrings-1.6.0-py2.py3-none-any.whl", hash = "sha256:99cac583d6c7e32dd28bbfbef120a7c0d1b6dde4adb5a9fd441c4227a6534bde"},
 ]
 flake8-pyi = [
-    {file = "flake8-pyi-22.5.1.tar.gz", hash = "sha256:52152ae25efbd6329c6426a3b29a9073a696ba744502fb3e48581a47426ad4c8"},
-    {file = "flake8_pyi-22.5.1-py37-none-any.whl", hash = "sha256:dfd385389f7bfed6c6666df1bc0a1a70fb03577e4e3ccd79229053d1e2854a96"},
+    {file = "flake8-pyi-22.7.0.tar.gz", hash = "sha256:f610d80ebebc33ed118b08ec36a12067b36cf7578c49b7cad577b2b965738595"},
+    {file = "flake8_pyi-22.7.0-py37-none-any.whl", hash = "sha256:edfdf31c38a9e50a56be99075f75f20217d2c49fe5f5bd71938126f1a1e0c22e"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
