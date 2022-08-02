@@ -2,6 +2,7 @@ from .base import ShopifyResource
 from .resources import (
     Fulfillment,
     Image,
+    InventoryItem,
     InventoryLevel,
     Location,
     Option,
@@ -14,6 +15,7 @@ from .session import Session
 __all__ = [
     "Fulfillment",
     "Image",
+    "InventoryItem",
     "ShopifyResource",
     "InventoryLevel",
     "Location",

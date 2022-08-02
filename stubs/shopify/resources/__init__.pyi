@@ -1,5 +1,6 @@
 from .fulfillment import Fulfillment
 from .image import Image
+from .inventory_item import InventoryItem
 from .inventory_level import InventoryLevel
 from .location import Location
 from .option import Option
@@ -11,6 +12,7 @@ __all__ = [
     "Fulfillment",
     "Image",
     "InventoryLevel",
+    "InventoryItem",
     "Location",
     "Option",
     "Order",
