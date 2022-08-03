@@ -202,3 +202,20 @@ def test_enter_method_does_not_load_credentials_if_already_set(
     assert session.ShopifyAPISession.SHOP_URL == temp_value
     assert session.ShopifyAPISession.API_VERSION == temp_value
     assert session.ShopifyAPISession.API_PASSWORD == temp_value
+
+
+# @patch("shopify_api_py.session.ShopifyAPISession")
+def test_shopify_api_session_decorator(
+    config_file, mock_shopify, shop_url, api_version, api_password
+):
+    @session.shopify_api_session
+    def test_func():
+        pass
+
+    test_func()
+    mock_shopify.Session.assert_called_once_with(
+        shop_url=shop_url,
+        version=api_version,
+        token=api_password,
+    )
+    mock_shopify.ShopifyResource.clear_session.assert_called_once_with()
