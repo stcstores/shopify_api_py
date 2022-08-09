@@ -1,3 +1,5 @@
+from typing import overload
+
 import shopify
 
 class Product(
@@ -11,4 +13,10 @@ class Product(
     images: list[shopify.Image]
     tags: str
     vendor: str
+    @overload  # type: ignore
+    @classmethod
+    def find(cls, id_: str | int | None) -> Product: ...
+    @overload
+    @classmethod
+    def find(cls) -> shopify.collection.PaginatedCollection: ...
     def save(self) -> Product: ...

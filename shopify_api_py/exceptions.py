@@ -24,3 +24,35 @@ class ResponseError(Exception):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Exception raised wthen a request returns a non success response."""
         super().__init__(*args, **kwargs)
+
+
+class ResourceNotFoundError(Exception):
+    """Exception raised when a non-existant resource is requested."""
+
+    def __init__(self, resource_type: str, resource_id: int | str) -> None:
+        """Exception raised when a non-existant resource is requested."""
+        super().__init__(f"{resource_type} with ID {resource_id} not found.")
+
+
+class ProductNotFoundError(ResourceNotFoundError):
+    """Exception raised when a non-existant product is requested."""
+
+    def __init__(self, product_id: int | str) -> None:
+        """Exception raised when a non-existant product is requested."""
+        super().__init__(resource_type="Product", resource_id=product_id)
+
+
+class VariantNotFoundError(ResourceNotFoundError):
+    """Exception raised when a non-existant variant is requested."""
+
+    def __init__(self, variant_id: int | str) -> None:
+        """Exception raised when a non-existant variant is requested."""
+        super().__init__(resource_type="Product", resource_id=variant_id)
+
+
+class InventoryItemNotFoundError(ResourceNotFoundError):
+    """Exception raised when a non-existant inventory item is requested."""
+
+    def __init__(self, inventory_item_id: int | str) -> None:
+        """Exception raised when a non-existant inventory item is requested."""
+        super().__init__(resource_type="Inventory Item", resource_id=inventory_item_id)

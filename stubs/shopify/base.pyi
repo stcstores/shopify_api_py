@@ -1,4 +1,5 @@
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 import shopify.mixins as mixins
 from pyactiveresource.activeresource import ActiveResource
@@ -17,5 +18,8 @@ class ShopifyResource(ActiveResource, mixins.Countable):
     def clear_session(cls) -> None: ...
     @classmethod
     def find(
-        cls, id_: str | None = ..., from_: str | None = ..., **kwargs: Mapping[str, Any]
+        cls,
+        id_: str | int | None = ...,
+        from_: str | None = ...,
+        **kwargs: Mapping[str, Any]
     ) -> PaginatedCollection: ...

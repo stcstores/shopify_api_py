@@ -2,6 +2,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 import shopify
+from pyactiveresource.connection import ResourceNotFound
 
 from shopify_api_py import exceptions, products
 
@@ -30,6 +31,11 @@ def new_stock_level():
 @pytest.fixture
 def product_id():
     return 68156156486
+
+
+@pytest.fixture
+def variant_id():
+    return 96513515615
 
 
 @pytest.fixture
@@ -575,3 +581,72 @@ def test_create_product_creates_raises_for_unsucessful_response(
             body_html=product_description,
             vendor=product_vendor,
         )
+
+
+@patch("shopify_api_py.products.shopify.Product")
+def test_get_product_by_id_requests_product(mock_Product, product_id):
+    products.get_product_by_id(product_id)
+    mock_Product.find.assert_called_once_with(id_=product_id)
+
+
+@patch("shopify_api_py.products.shopify.Product")
+def test_get_product_by_id_returns_product(mock_Product, product_id):
+    mock_product = Mock()
+    mock_Product.find.return_value = mock_product
+    returned_value = products.get_product_by_id(product_id)
+    assert returned_value == mock_product
+
+
+@patch("shopify_api_py.products.shopify.Product")
+def test_get_product_by_id_raises_product_not_found_error(mock_Product, product_id):
+    mock_Product.find.side_effect = ResourceNotFound
+    with pytest.raises(exceptions.ProductNotFoundError):
+        products.get_product_by_id(product_id)
+
+
+@patch("shopify_api_py.products.shopify.Variant")
+def test_get_variant_by_id_requests_product(mock_Variant, variant_id):
+    products.get_variant_by_id(variant_id)
+    mock_Variant.find.assert_called_once_with(id_=variant_id)
+
+
+@patch("shopify_api_py.products.shopify.Variant")
+def test_get_variant_by_id_returns_product(mock_Variant, variant_id):
+    mock_variant = Mock()
+    mock_Variant.find.return_value = mock_variant
+    returned_value = products.get_variant_by_id(variant_id)
+    assert returned_value == mock_variant
+
+
+@patch("shopify_api_py.products.shopify.Variant")
+def test_get_variant_by_id_raises_product_not_found_error(mock_Variant, variant_id):
+    mock_Variant.find.side_effect = ResourceNotFound
+    with pytest.raises(exceptions.VariantNotFoundError):
+        products.get_variant_by_id(variant_id)
+
+
+@patch("shopify_api_py.products.shopify.InventoryItem")
+def test_get_inventory_item_by_id_requests_product(
+    mock_InventoryItem, inventory_item_id
+):
+    products.get_inventory_item_by_id(inventory_item_id)
+    mock_InventoryItem.find.assert_called_once_with(id_=inventory_item_id)
+
+
+@patch("shopify_api_py.products.shopify.InventoryItem")
+def test_get_inventory_item_by_id_returns_product(
+    mock_InventoryItem, inventory_item_id
+):
+    mock_variant = Mock()
+    mock_InventoryItem.find.return_value = mock_variant
+    returned_value = products.get_inventory_item_by_id(inventory_item_id)
+    assert returned_value == mock_variant
+
+
+@patch("shopify_api_py.products.shopify.InventoryItem")
+def test_get_inventory_item_by_id_raises_product_not_found_error(
+    mock_InventoryItem, inventory_item_id
+):
+    mock_InventoryItem.find.side_effect = ResourceNotFound
+    with pytest.raises(exceptions.InventoryItemNotFoundError):
+        products.get_inventory_item_by_id(inventory_item_id)

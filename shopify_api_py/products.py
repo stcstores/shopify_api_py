@@ -1,6 +1,7 @@
 """Methods for interacting with Shopify products."""
 
 import shopify
+from pyactiveresource.connection import ResourceNotFound
 
 from shopify_api_py import exceptions, request
 
@@ -11,10 +12,64 @@ def get_all_products() -> list[shopify.Product]:
     return request.make_paginated_request(request_method=request_method)  # type: ignore[return-value]
 
 
+def get_product_by_id(product_id: int) -> shopify.Product:
+    """Return the product with ID product_id.
+
+    Args:
+        product_id (int): ID of the product to return.
+
+    Raises:
+        exceptions.ProductNotFoundError: If no product is found.
+
+    Returns:
+        shopify.Product: shopify.Product: The Shopify product with the ID product_id.
+    """
+    try:
+        return shopify.Product.find(id_=product_id)
+    except ResourceNotFound:
+        raise exceptions.ProductNotFoundError(product_id) from None
+
+
 def get_all_variants() -> list[shopify.Variant]:
     """Return a list of all shopify variants."""
     request_method = shopify.Variant.find
     return request.make_paginated_request(request_method=request_method)  # type: ignore[return-value]
+
+
+def get_variant_by_id(variant_id: int) -> shopify.Variant:
+    """Return the variant with ID variant_id.
+
+    Args:
+        variant_id (int): ID of the variant to return.
+
+    Raises:
+        exceptions.VariantNotFoundError: If no variant is found.
+
+    Returns:
+        shopify.Variant: The Shopify variant with the ID variant_id.
+    """
+    try:
+        return shopify.Variant.find(id_=variant_id)
+    except ResourceNotFound:
+        raise exceptions.VariantNotFoundError(variant_id) from None
+
+
+def get_inventory_item_by_id(inventory_item_id: int) -> shopify.InventoryItem:
+    """Return the inventory item with ID variant_id.
+
+    Args:
+        inventory_item_id (int): ID of the inventory item to return.
+
+    Raises:
+        exceptions.VariantNotFoundError: If no inventory item is found.
+
+    Returns:
+        shopify.Variant: The Shopify inventory item with the ID inventory_item_id.
+    """
+    try:
+        return shopify.InventoryItem.find(id_=inventory_item_id)
+    except ResourceNotFound:
+        raise exceptions.InventoryItemNotFoundError(inventory_item_id) from None
 
 
 def set_stock_level(
@@ -46,18 +101,6 @@ def update_variant_stock(
     )
     variant.inventory_quantity = new_stock_level
     return response
-
-
-def get_inventory_item_by_id(inventory_item_id: int) -> shopify.InventoryItem:
-    """Return the `shopify.InventoryItem` object matching the inventory item ID.
-
-    Args:
-        inventory_item_id (int): ID of the inventory item to be returned.
-
-    Returns:
-        shopify.InventoryItem: The inventory item with the id inventory_item_id.
-    """
-    return shopify.InventoryItem.find(inventory_item_id)  # type: ignore[return-value]
 
 
 def set_customs_information(
