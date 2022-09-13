@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shopify_api_py"
-version = "0.0.3"
+version = "0.0.4"
 description = ""
 authors = ["Luke Shiner <luke@lukeshiner.com>"]
 license = "MIT"
