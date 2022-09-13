@@ -254,3 +254,75 @@ def create_product(
     if response is False:
         raise exceptions.ResponseError("Error creating product.")
     return product
+
+
+def get_all_custom_collections() -> list[shopify.CustomCollection]:
+    """Return a list of all shopify custom collections."""
+    request_method = shopify.CustomCollection.find
+    return request.make_paginated_request(request_method=request_method)  # type: ignore[return-value]
+
+
+def get_custom_collection_by_id(collection_id: int) -> shopify.CustomCollection:
+    """Return the custom collection with ID collection_id.
+
+    Args:
+        collection_id (int): ID of the custom collection to return.
+
+    Raises:
+        exceptions.CustomCollectionNotFoundError: If no custom collection is found.
+
+    Returns:
+        shopify.CustomCollection: The Shopify custom collection with the ID collection_id.
+    """
+    try:
+        return shopify.CustomCollection.find(id_=collection_id)
+    except ResourceNotFound:
+        raise exceptions.CustomCollectionNotFoundError(collection_id) from None
+
+
+def get_all_smart_collections() -> list[shopify.SmartCollection]:
+    """Return a list of all shopify smart collections."""
+    request_method = shopify.SmartCollection.find
+    return request.make_paginated_request(request_method=request_method)  # type: ignore[return-value]
+
+
+def get_smart_collection_by_id(collection_id: int) -> shopify.SmartCollection:
+    """Return the smart collection with ID collection_id.
+
+    Args:
+        collection_id (int): ID of the smart collection to return.
+
+    Raises:
+        exceptions.SmartCollectionNotFoundError: If no smart collection is found.
+
+    Returns:
+        shopify.SmartCollection: The Shopify smart collection with the ID collection_id.
+    """
+    try:
+        return shopify.SmartCollection.find(id_=collection_id)
+    except ResourceNotFound:
+        raise exceptions.SmartCollectionNotFoundError(collection_id) from None
+
+
+def get_all_collects() -> list[shopify.Collect]:
+    """Return a list of all shopify collects."""
+    request_method = shopify.Collect.find
+    return request.make_paginated_request(request_method=request_method)  # type: ignore[return-value]
+
+
+def get_collect_by_id(collect_id: int) -> shopify.Collect:
+    """Return the collect with ID collect_id.
+
+    Args:
+        collect_id (int): ID of the collect to return.
+
+    Raises:
+        exceptions.CollectNotFoundError: If no collect is found.
+
+    Returns:
+        shopify.Collect: The Shopify collect with the ID collect_id.
+    """
+    try:
+        return shopify.Collect.find(id_=collect_id)
+    except ResourceNotFound:
+        raise exceptions.CollectNotFoundError(collect_id) from None

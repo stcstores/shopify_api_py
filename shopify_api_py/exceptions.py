@@ -56,3 +56,27 @@ class InventoryItemNotFoundError(ResourceNotFoundError):
     def __init__(self, inventory_item_id: int | str) -> None:
         """Exception raised when a non-existant inventory item is requested."""
         super().__init__(resource_type="Inventory Item", resource_id=inventory_item_id)
+
+
+class CustomCollectionNotFoundError(ResourceNotFoundError):
+    """Exception raised when a non-existant custom collection is requested."""
+
+    def __init__(self, collection_id: int | str) -> None:
+        """Exception raised when a non-existant custom collection is requested."""
+        super().__init__(resource_type="Custom Collection", resource_id=collection_id)
+
+
+class SmartCollectionNotFoundError(ResourceNotFoundError):
+    """Exception raised when a non-existant smart collection is requested."""
+
+    def __init__(self, collection_id: int | str) -> None:
+        """Exception raised when a non-existant smart collection is requested."""
+        super().__init__(resource_type="Smart Collection", resource_id=collection_id)
+
+
+class CollectNotFoundError(ResourceNotFoundError):
+    """Exception raised when a non-existant collect is requested."""
+
+    def __init__(self, collect_id: int | str) -> None:
+        """Exception raised when a non-existant collect is requested."""
+        super().__init__(resource_type="Collect", resource_id=collect_id)

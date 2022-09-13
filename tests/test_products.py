@@ -39,6 +39,16 @@ def variant_id():
 
 
 @pytest.fixture
+def collection_id():
+    return 684616516516
+
+
+@pytest.fixture
+def collect_id():
+    return 41646161666
+
+
+@pytest.fixture
 def image_url():
     return "https://nothing.com"
 
@@ -650,3 +660,123 @@ def test_get_inventory_item_by_id_raises_product_not_found_error(
     mock_InventoryItem.find.side_effect = ResourceNotFound
     with pytest.raises(exceptions.InventoryItemNotFoundError):
         products.get_inventory_item_by_id(inventory_item_id)
+
+
+def test_get_all_custom_collections_calls_make_paginated_request(mock_request):
+    products.get_all_custom_collections()
+    mock_request.make_paginated_request.assert_called_once_with(
+        request_method=shopify.CustomCollection.find
+    )
+
+
+def test_get_all_custom_collections_returns_make_paginated_request_return_value(
+    mock_request,
+):
+    return_value = Mock()
+    mock_request.make_paginated_request.return_value = return_value
+    assert products.get_all_custom_collections() is return_value
+
+
+@patch("shopify_api_py.products.shopify.CustomCollection")
+def test_get_custom_collection_by_id_requests_custom_collection(
+    mock_CustomCollection, collection_id
+):
+    products.get_custom_collection_by_id(collection_id)
+    mock_CustomCollection.find.assert_called_once_with(id_=collection_id)
+
+
+@patch("shopify_api_py.products.shopify.CustomCollection")
+def test_get_custom_collection_by_id_returns_custom_collection(
+    mock_CustomCollection, collection_id
+):
+    mock_custom_collection = Mock()
+    mock_CustomCollection.find.return_value = mock_custom_collection
+    returned_value = products.get_custom_collection_by_id(collection_id)
+    assert returned_value == mock_custom_collection
+
+
+@patch("shopify_api_py.products.shopify.CustomCollection")
+def test_get_custom_collection_by_id_raises_custom_collection_not_found_error(
+    mock_CustomCollection, collection_id
+):
+    mock_CustomCollection.find.side_effect = ResourceNotFound
+    with pytest.raises(exceptions.CustomCollectionNotFoundError):
+        products.get_custom_collection_by_id(collection_id)
+
+
+def test_get_all_smart_collections_calls_make_paginated_request(mock_request):
+    products.get_all_smart_collections()
+    mock_request.make_paginated_request.assert_called_once_with(
+        request_method=shopify.SmartCollection.find
+    )
+
+
+def test_get_all_smart_collections_returns_make_paginated_request_return_value(
+    mock_request,
+):
+    return_value = Mock()
+    mock_request.make_paginated_request.return_value = return_value
+    assert products.get_all_smart_collections() is return_value
+
+
+@patch("shopify_api_py.products.shopify.SmartCollection")
+def test_get_smart_collection_by_id_requests_smart_collection(
+    mock_SmartCollection, collection_id
+):
+    products.get_smart_collection_by_id(collection_id)
+    mock_SmartCollection.find.assert_called_once_with(id_=collection_id)
+
+
+@patch("shopify_api_py.products.shopify.SmartCollection")
+def test_get_smart_collection_by_id_returns_smart_collection(
+    mock_SmartCollection, collection_id
+):
+    mock_smart_collection = Mock()
+    mock_SmartCollection.find.return_value = mock_smart_collection
+    returned_value = products.get_smart_collection_by_id(collection_id)
+    assert returned_value == mock_smart_collection
+
+
+@patch("shopify_api_py.products.shopify.SmartCollection")
+def test_get_smart_collection_by_id_raises_smart_collection_not_found_error(
+    mock_SmartCollection, collection_id
+):
+    mock_SmartCollection.find.side_effect = ResourceNotFound
+    with pytest.raises(exceptions.SmartCollectionNotFoundError):
+        products.get_smart_collection_by_id(collection_id)
+
+
+def test_get_all_collects_calls_make_paginated_request(mock_request):
+    products.get_all_collects()
+    mock_request.make_paginated_request.assert_called_once_with(
+        request_method=shopify.Collect.find
+    )
+
+
+def test_get_all_collects_returns_make_paginated_request_return_value(
+    mock_request,
+):
+    return_value = Mock()
+    mock_request.make_paginated_request.return_value = return_value
+    assert products.get_all_collects() is return_value
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_get_collect_by_id_requests_collect(mock_Collect, collect_id):
+    products.get_collect_by_id(collect_id)
+    mock_Collect.find.assert_called_once_with(id_=collect_id)
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_get_collect_by_id_returns_collect(mock_Collect, collect_id):
+    mock_collect = Mock()
+    mock_Collect.find.return_value = mock_collect
+    returned_value = products.get_collect_by_id(collect_id)
+    assert returned_value == mock_collect
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_collect_by_id_raises_collect_not_found_error(mock_Collect, collect_id):
+    mock_Collect.find.side_effect = ResourceNotFound
+    with pytest.raises(exceptions.CollectNotFoundError):
+        products.get_collect_by_id(collect_id)
