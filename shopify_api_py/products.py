@@ -326,3 +326,63 @@ def get_collect_by_id(collect_id: int) -> shopify.Collect:
         return shopify.Collect.find(id_=collect_id)
     except ResourceNotFound:
         raise exceptions.CollectNotFoundError(collect_id) from None
+
+
+def add_product_to_collection(product_id: int, collection_id: int) -> None:
+    """Add a product to a custom collection.
+
+    Args:
+        product_id (int): ID of the product to add.
+        collection_id (int): ID of the collection to add the product to.
+
+    Raises:
+        exceptions.ResponseError: If an error is creating when requesting creation of
+            the new Collect.
+    """
+    collect = shopify.Collect()
+    collect.product_id = product_id
+    collect.collection_id = collection_id
+    try:
+        response = collect.save()
+    except Exception:
+        raise exceptions.ResponseError("Error adding product to collection.")
+    if not response:
+        raise exceptions.ResponseError("Error adding product to collection.")
+
+
+def remove_product_from_collection(product_id: int, collection_id: int) -> None:
+    """Remove a product from a collection.
+
+    Args:
+        product_id (int): The ID of the product to remove.
+        collection_id (int): The ID of the collection to be removed from.
+
+    Raises:
+        exceptions.ResponseError: If no Collect matching the product and collection
+            indicated is found.
+    """
+    collects = shopify.Collect.find(product_id=product_id, collection_id=collection_id)
+    if len(collects) == 0:
+        raise exceptions.ResponseError("No matching Collect found.")
+    else:
+        for collect in collects:
+            try:
+                collect.destroy()
+            except Exception:
+                raise exceptions.ResponseError(
+                    "Error removing product from collection."
+                )
+
+
+def get_products_in_custom_collection(collection_id: int) -> list[int]:
+    """Return the IDs of all products in a custom collection.
+
+    Args:
+        collection_id (int): ID of the collection.
+
+    Returns:
+        list[int]: List of IDs of products in the collection.
+    """
+    request_method = shopify.Collect.find
+    collects: list[shopify.Collect] = request.make_paginated_request(request_method=request_method, kwargs={"collection_id": collection_id})  # type: ignore[return-value, assignment]
+    return [collect.product_id for collect in collects]

@@ -780,3 +780,132 @@ def test_collect_by_id_raises_collect_not_found_error(mock_Collect, collect_id):
     mock_Collect.find.side_effect = ResourceNotFound
     with pytest.raises(exceptions.CollectNotFoundError):
         products.get_collect_by_id(collect_id)
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_add_product_to_collection_creates_a_collect(
+    mock_Collect, product_id, collection_id
+):
+    mock_collect = Mock()
+    mock_Collect.return_value = mock_collect
+    products.add_product_to_collection(
+        product_id=product_id, collection_id=collection_id
+    )
+    mock_Collect.assert_called_once_with()
+    mock_collect.save.assert_called_once_with()
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_add_product_to_collection_sets_product_id(
+    mock_Collect, product_id, collection_id
+):
+    mock_collect = Mock()
+    mock_Collect.return_value = mock_collect
+    products.add_product_to_collection(
+        product_id=product_id, collection_id=collection_id
+    )
+    assert mock_collect.product_id == product_id
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_add_product_to_collection_sets_collection_id(
+    mock_Collect, product_id, collection_id
+):
+    mock_collect = Mock()
+    mock_Collect.return_value = mock_collect
+    products.add_product_to_collection(
+        product_id=product_id, collection_id=collection_id
+    )
+    assert mock_collect.collection_id == collection_id
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_add_product_to_collection_raises_ResponseError_incase_of_exception(
+    mock_Collect, product_id, collection_id
+):
+    mock_collect = Mock()
+    mock_collect.save.side_effect = Exception("Test exception")
+    mock_Collect.return_value = mock_collect
+    with pytest.raises(exceptions.ResponseError):
+        products.add_product_to_collection(
+            product_id=product_id, collection_id=collection_id
+        )
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_add_product_to_collection_raises_ResponseError_incase_of_failed_response(
+    mock_Collect, product_id, collection_id
+):
+    mock_collect = Mock()
+    mock_collect.save.return_value = False
+    mock_Collect.return_value = mock_collect
+    with pytest.raises(exceptions.ResponseError):
+        products.add_product_to_collection(
+            product_id=product_id, collection_id=collection_id
+        )
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_remove_product_from_collection_finds_collects(
+    mock_Collect, product_id, collection_id
+):
+    mock_Collect.find.return_value = [Mock()]
+    products.remove_product_from_collection(
+        product_id=product_id, collection_id=collection_id
+    )
+    mock_Collect.find.assert_called_once_with(
+        product_id=product_id, collection_id=collection_id
+    )
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_remove_product_from_collection_raises_if_no_collects_are_found(
+    mock_Collect, product_id, collection_id
+):
+    mock_Collect.find.return_value = []
+    with pytest.raises(exceptions.ResponseError):
+        products.remove_product_from_collection(
+            product_id=product_id, collection_id=collection_id
+        )
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_remove_product_from_collection_calls_destroy_on_collects(
+    mock_Collect, product_id, collection_id
+):
+    mock_Collect.find.return_value = [Mock(), Mock(), Mock()]
+    products.remove_product_from_collection(
+        product_id=product_id, collection_id=collection_id
+    )
+    for value in mock_Collect.find.return_value:
+        value.destroy.assert_called_once_with()
+
+
+@patch("shopify_api_py.products.shopify.Collect")
+def test_remove_product_from_collection_raises_ResponseError_incase_of_exception_destroying_collect(
+    mock_Collect, product_id, collection_id
+):
+    mock_Collect.find.return_value = [Mock(), Mock(), Mock()]
+    mock_Collect.find.return_value[1].destroy.side_effect = Exception("Test exception")
+    with pytest.raises(exceptions.ResponseError):
+        products.remove_product_from_collection(
+            product_id=product_id, collection_id=collection_id
+        )
+
+
+def test_get_products_in_custom_collection_finds_collects(mock_request, collection_id):
+    products.get_products_in_custom_collection(collection_id=collection_id)
+    mock_request.make_paginated_request.assert_called_once_with(
+        request_method=shopify.Collect.find, kwargs={"collection_id": collection_id}
+    )
+
+
+def test_get_products_in_custom_collection_returns_product_ids(
+    mock_request, collection_id
+):
+    mock_collects = [Mock(), Mock(), Mock()]
+    mock_request.make_paginated_request.return_value = mock_collects
+    returned_value = products.get_products_in_custom_collection(
+        collection_id=collection_id
+    )
+    assert returned_value == [mock.product_id for mock in mock_collects]
