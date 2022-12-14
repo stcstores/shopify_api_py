@@ -394,7 +394,7 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "shopifyapi"
-version = "12.0.1"
+version = "12.1.0"
 description = "Shopify API for Python"
 category = "main"
 optional = false
@@ -728,7 +728,7 @@ requests = [
     {file = "requests-2.28.1.tar.gz", hash = "sha256:7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983"},
 ]
 shopifyapi = [
-    {file = "ShopifyAPI-12.0.1.tar.gz", hash = "sha256:e00b288d095115e67ada71e777c769cac01382040f941af06039b6374e476513"},
+    {file = "ShopifyAPI-12.1.0.tar.gz", hash = "sha256:3e8546bd9aea90fd8d7cc894766404bc07c9f19d94fa922bd61b0ac131713c69"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
