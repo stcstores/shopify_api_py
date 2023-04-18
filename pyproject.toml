@@ -28,5 +28,5 @@ types-toml = ">=0.10.3"
 flake8-pyi = "^23.4.1"
 
 [build-system]
-requires = ["poetry>=1.1.6"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
