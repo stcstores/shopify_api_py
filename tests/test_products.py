@@ -141,7 +141,7 @@ def test_get_inventory_item_by_id_requests_inventory_item(
     mock_inventory_item_find, inventory_item_id
 ):
     products.get_inventory_item_by_id(inventory_item_id)
-    assert mock_inventory_item_find.called_once_with(inventory_item_id)
+    mock_inventory_item_find.assert_called_once_with(id_=inventory_item_id)
 
 
 @patch("shopify_api_py.products.shopify.InventoryItem.find")
