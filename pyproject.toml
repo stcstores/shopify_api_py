@@ -23,7 +23,6 @@ isort = ">=5.10.0"
 mypy = ">=0.910"
 pytest = ">=6.2.5"
 pytest-cov = ">=3.0.0"
-coveralls = ">=3.3.0"
 types-toml = ">=0.10.3"
 flake8-pyi = "^23.11.0"
 
