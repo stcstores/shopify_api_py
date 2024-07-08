@@ -518,12 +518,12 @@ files = [
 
 [[package]]
 name = "shopifyapi"
-version = "12.5.0"
+version = "12.6.0"
 description = "Shopify API for Python"
 optional = false
 python-versions = "*"
 files = [
-    {file = "ShopifyAPI-12.5.0.tar.gz", hash = "sha256:f4e63420a8cc4377990f90290886db57c3e3b308c2edd5f7d010194269d97e07"},
+    {file = "shopifyapi-12.6.0.tar.gz", hash = "sha256:81118403ff01426a81fc4db17fcdb914b75837bd4f38120844f84989cf29e8a0"},
 ]
 
 [package.dependencies]
