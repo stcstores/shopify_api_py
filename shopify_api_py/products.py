@@ -344,8 +344,8 @@ def add_product_to_collection(product_id: int, collection_id: int) -> None:
     collect.collection_id = collection_id
     try:
         response = collect.save()
-    except Exception:
-        raise exceptions.ResponseError("Error adding product to collection.")
+    except Exception as e:
+        raise exceptions.ResponseError("Error adding product to collection.") from e
     if not response:
         raise exceptions.ResponseError("Error adding product to collection.")
 
@@ -368,10 +368,10 @@ def remove_product_from_collection(product_id: int, collection_id: int) -> None:
         for collect in collects:
             try:
                 collect.destroy()
-            except Exception:
+            except Exception as e:
                 raise exceptions.ResponseError(
                     "Error removing product from collection."
-                )
+                ) from e
 
 
 def get_products_in_custom_collection(collection_id: int) -> list[int]:
@@ -384,5 +384,7 @@ def get_products_in_custom_collection(collection_id: int) -> list[int]:
         list[int]: List of IDs of products in the collection.
     """
     request_method = shopify.Collect.find
-    collects: list[shopify.Collect] = request.make_paginated_request(request_method=request_method, kwargs={"collection_id": collection_id})  # type: ignore[return-value, assignment]
+    collects: list[shopify.Collect] = request.make_paginated_request(
+        request_method=request_method, kwargs={"collection_id": collection_id}
+    )  # type: ignore[return-value, assignment]
     return [collect.product_id for collect in collects]
